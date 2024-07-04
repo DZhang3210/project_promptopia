@@ -30,6 +30,11 @@ const Feed = () => {
       setPosts(data)
     }
     fetchPosts();
+    const intervalId = setInterval(() => {
+      console.log("hey")
+      fetchPosts(); // Fetch every 5 seconds (5000 ms)
+    }, 10000);
+    return () => clearInterval(intervalId);
   }, [])
   return (
     <section className='feed'>
