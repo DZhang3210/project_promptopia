@@ -23,23 +23,25 @@ const Feed = () => {
   const handleSearchChange = (e) => {
     setSearchText(e.target.value)
   }
+
+  const fetchPosts = async () =>{
+    const response = await fetch('/api/prompt', {cache: 'no-store'})
+    const data = await response.json()
+    setPosts(data)
+  }
+
   useEffect(()=>{
-    const fetchPosts = async () =>{
-      const response = await fetch('/api/prompt', {cache: 'no-store'})
-      const data = await response.json()
-      setPosts(data)
-    }
     fetchPosts();
-    const intervalId = setInterval(() => {
-      console.log("hey")
-      fetchPosts(); // Fetch every 5 seconds (5000 ms)
-    }, 20000);
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(() => {
+    //   console.log("hey")
+    //   fetchPosts(); // Fetch every 5 seconds (5000 ms)
+    // }, 20000);
+    // return () => clearInterval(intervalId);
   }, [])
   return (
     <section className='feed'>
       <form className='relative w-full flex-center'>
-        <input 
+        <input  
           type = "text"
           placeholder = "Search for a tag or a username"
           value = {searchText}
