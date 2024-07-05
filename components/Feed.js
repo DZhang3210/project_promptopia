@@ -23,13 +23,12 @@ const Feed = () => {
   const handleSearchChange = (e) => {
     setSearchText(e.target.value)
   }
-
+  
   const fetchPosts = async () =>{
     const response = await fetch('/api/prompt', {cache: 'no-store'})
     const data = await response.json()
     setPosts(data)
   }
-
   useEffect(()=>{
     fetchPosts();
     // const intervalId = setInterval(() => {
