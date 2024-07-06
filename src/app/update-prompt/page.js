@@ -6,6 +6,7 @@ import {useSession} from 'next-auth/react'
 import {useRouter, useSearchParams} from 'next/navigation'
 
 import Form from '@/components/Form'
+import { unstable_noStore } from 'next/cache'
 
 const EditPrompt = () => {
   const router = useRouter()
@@ -19,6 +20,7 @@ const EditPrompt = () => {
 
   useEffect(() => {
     const getPromptDetails = async() =>{
+        unstable_noStore()
         const response = await fetch(`/api/prompt/${promptId}`)
         const data = await response.json()
         setPost({
@@ -54,15 +56,13 @@ const EditPrompt = () => {
     }
   }
   return (
-    <Suspense>
-        <Form
-            type = "Edit"
-            post = {post}
-            setPost = {setPost}
-            submitting = {submitting}
-            handleSubmit = {updatePrompt}
-        />
-    </Suspense>
+      <Form
+          type = "Edit"
+          post = {post}
+          setPost = {setPost}
+          submitting = {submitting}
+          handleSubmit = {updatePrompt}
+      />
   )
 }
 
