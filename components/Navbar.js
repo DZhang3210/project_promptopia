@@ -8,7 +8,6 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
   const {data:session} = useSession();
-  console.log("SESSION",session)
   const [providers, setProviders] = useState(null)
   const [toggleDropdown, settoggleDropdown] = useState(false)
 
@@ -32,6 +31,7 @@ const Navbar = () => {
         <p className='logo_text'>Promptopia</p>
       </Link>
       <div className='sm:flex hidden'>
+        
         {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href = "/create-prompt" className='black_btn'>
@@ -53,17 +53,12 @@ const Navbar = () => {
           </div>
         ):(
           <>
-            {providers && 
-              Object.values(providers).map((provider)=>(
-                <button
-                  type = "button"
-                  key = {provider.name}
-                  onClick ={() => signIn(provider.id)}
-                  className='black_btn'
-                >
-                  Sign In({provider.name})
-                </button>
-              ))}
+            <Link
+              href = "/login"
+              className='black_btn'
+            >
+              Login Page
+            </Link>
           </>
         )}
       </div>

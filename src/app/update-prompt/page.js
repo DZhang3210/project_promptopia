@@ -28,6 +28,7 @@ const EditPrompt = () => {
             tag: data.tag,
         })
     }
+    
     if(promptId) getPromptDetails()
   }, [promptId])
   // if(session?.user.id){
