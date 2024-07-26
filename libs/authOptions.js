@@ -17,7 +17,9 @@ export const authOptions = {
     callbacks: {
       async session({ session }) {
         // store the user id from MongoDB to session
+        console.log("ERROR ERROR ERROR")
         const sessionUser = await User.findOne({ email: session.user.email });
+        console.log("ERROR ERROR ERROR")
         session.user.id = sessionUser._id.toString();
   
         return session;

@@ -3,13 +3,16 @@
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import {usePathname, useRouter} from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {getLikeStatus, handleLikeButton} from '@/actions/PromptCardActions'
 
 const PromptCard = ({post, handleEdit, handleDelete, handleTagClick}) => {
   const [copied, setCopied] = useState("")
+  const [liked, setLiked] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
   const {data:session} = useSession();
   const pathName = usePathname();
   const router = useRouter();
@@ -18,7 +21,19 @@ const PromptCard = ({post, handleEdit, handleDelete, handleTagClick}) => {
     navigator.clipboard.writeText(post.creator?._id)
     setTimeout(() => setCopied(""),3000)
   }
-  
+  const toggleLike = async () => {
+    setIsProcessing(true)
+    setLiked(prev=>!prev)
+    await handleLikeButton(session.user.id, post._id)
+    setIsProcessing(false)
+  }
+  useEffect(()=>{
+    const initializeLiked = async () => {
+      const likeResult = await getLikeStatus(session.user.id, post._id)
+      setLiked(likeResult)
+    }
+    initializeLiked()
+  },[session, post._id])
 
   return (
     <div className='prompt_card'>
@@ -60,7 +75,15 @@ const PromptCard = ({post, handleEdit, handleDelete, handleTagClick}) => {
         {post.tag}
       </p>
       <div className='w-full flex py-2'>
-        <FontAwesomeIcon icon={faHeart} />
+        <button
+          onClick = {toggleLike}
+          disabled = {isProcessing}
+        >
+          <FontAwesomeIcon 
+            icon={faHeart} 
+            className={'transition origin-center hover:scale-110 ' + (liked ? 'text-pink-600':"")}
+          /> 
+        </button>
       </div>
       {session?.user.id === post?.creator?._id && pathName === '/profile' && (
         <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
