@@ -1,20 +1,10 @@
 import {connectToDb} from '@/utils/database'
 import Prompt from '@/models/prompt';
 
-// export const GET = async (req, res) => {
-//     try{
-//         await connectToDb()
-//         const prompts = await Prompt.find({}).populate('creator');
-//         return new Response(JSON.stringify(prompts), {status:200})
-//     }catch(err){
-//         return new Response('Data could not be fetched', {status:500})
-//     }
-// }
 
 export const GET = async (req, {url}) => {
     try {
         await connectToDb();
-
         // Parse search parameters from the request URL
         const url = new URL(req.url, `http://${req.headers.host}`);
         const searchParams = new URLSearchParams(url.search);
@@ -28,15 +18,15 @@ export const GET = async (req, {url}) => {
                     {
                         $or: [
                             { prompt: { $regex: keyword, $options: 'i' } },
-                            { tag: { $regex: keyword, $options: 'i' } }
+                            { tag: { $regex: keyword, $options: 'i' } },
                         ]
                     }
                 ]
             };
         }
-
+        
         const prompt = await Prompt.find(query).populate('creator');
-
+      
         if (!prompt) return new Response("Prompt not found", { status: 404 });
 
         return new Response(JSON.stringify(prompt), { status: 200 });

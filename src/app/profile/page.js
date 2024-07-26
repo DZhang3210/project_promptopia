@@ -9,6 +9,7 @@ const MyProfile = () => {
   const router = useRouter();
   const {data: session} =  useSession()
   const [posts, setPosts] = useState([])
+  const [keyword, setKeyword] = useState([])
 
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`)
@@ -30,13 +31,13 @@ const MyProfile = () => {
 
   useEffect(()=>{
     const fetchPosts = async () =>{
-      const response = await fetch(`/api/users/${session?.user?.id}/posts`)
+      const response = await fetch(`/api/users/${session?.user?.id}/posts?keyword=${keyword}`)
       const data = await response.json()
       setPosts(data)
 
     }
     if(session?.user.id) fetchPosts();
-  }, [session])
+  }, [session, keyword])
   
   return (
     <Profile
@@ -45,6 +46,8 @@ const MyProfile = () => {
         data = {posts}
         handleEdit = {handleEdit}
         handleDelete = {handleDelete}
+        keyword=  {keyword}
+        setKeyword = {setKeyword}
     />
   )
 }

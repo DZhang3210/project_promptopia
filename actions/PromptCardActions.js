@@ -3,6 +3,9 @@ import {connectToDb} from '@/utils/database'
 import Like from '@/models/likeEvent'
 
 export const getLikeStatus = async (userID, postID) => {
+    if(!userID || !postID){
+        return false
+    }
     try {
         await connectToDb();
         const likeResult = await Like.findOne({ client: userID, post: postID });

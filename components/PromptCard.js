@@ -29,11 +29,16 @@ const PromptCard = ({post, handleEdit, handleDelete, handleTagClick}) => {
   }
   useEffect(()=>{
     const initializeLiked = async () => {
-      const likeResult = await getLikeStatus(session.user.id, post._id)
-      setLiked(likeResult)
+      // if(!session){
+
+      // }
+      if(session?.user?.id && post._id){
+        const likeResult = await getLikeStatus(session.user?.id, post._id)
+        setLiked(likeResult)
+      }      
     }
     initializeLiked()
-  },[session, post._id])
+  },[session, post])
 
   return (
     <div className='prompt_card'>
