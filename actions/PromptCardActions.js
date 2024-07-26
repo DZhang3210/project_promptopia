@@ -10,10 +10,10 @@ export const getLikeStatus = async (userID, postID) => {
         await connectToDb();
         const likeResult = await Like.findOne({ client: userID, post: postID });
         if(!likeResult){
-            console.log("Couldn't find any")
+            //console.log("Couldn't find any")
             return false
         }else{
-            console.log("results", likeResult)
+            //console.log("results", likeResult)
             return likeResult.liked
         }
     }
@@ -32,20 +32,25 @@ export const handleLikeButton = async(userID, postID)=>{
 
         // Check if the Like document exists
         const existingLike = await Like.findOne({ client: userID, post: postID });
+        //console.log("existingLike", existingLike)
 
-        if (existingLike) {
+        if (existingLike !== null) {
+            //console.log("Im Going INSIDE")
             // If it exists, toggle the 'liked' field
             existingLike.liked = !existingLike.liked;
             await existingLike.save();
             return true
         } else {
+            // console.log("Hello", userID)
             // If it doesn't exist, create a new Like document
             const newLike = new Like({
-                client: userID,
+                creator: userID,
                 post: postID,
                 liked: true,
             });
+            // console.log("Hi", newLike)
             await newLike.save();
+            // console.log("Finished operation")
             return true
         }
     } catch (err) {

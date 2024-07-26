@@ -1,7 +1,7 @@
 import React from 'react'
 import PromptCard from './PromptCard'
 
-const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword}) => {
+const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword, filterSelection, setFilterSelection}) => {
   return (
     <section className='w-full'>
       <h1 className='head_text text-left'>
@@ -11,7 +11,7 @@ const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword
         {desc}
       </p>
       
-      <form className='relative w-full flex-center'>
+      <form className='relative w-full flex-center mt-4'>
         <input  
           type = "text"
           placeholder = "Search for a tag or a username"
@@ -21,6 +21,22 @@ const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword
           className='search_input peer'
         />
       </form>
+
+      <div className='mt-4 flex *:px-10 *:py-2 text-xl'>
+        <div 
+          className={'bg-white border-b-4 cursor-pointer ' + (filterSelection ===0 ?"border-blue-300":"")}
+          onClick = {()=>{setFilterSelection(0);}}
+        
+        >
+          Your Posts
+        </div>
+        <div 
+          className={'bg-white border-b-4 cursor-pointer ' + (filterSelection ===1 ?"border-blue-300":"")}
+          onClick = {()=>{setFilterSelection(1);}}
+        >
+          Liked Posts
+        </div>
+      </div>
 
       <div className='mt-16 prompt_layout'>
         {data.map((post) =>(

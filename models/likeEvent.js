@@ -13,7 +13,6 @@ const LikeSchema = new Schema({
     },
     liked: {
         type: Boolean,
-        default: true,
     },
 }, { timestamps: true });
 

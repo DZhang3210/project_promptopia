@@ -8,7 +8,7 @@ export const GET = async (req, {params}) => {
         const url = new URL(req.url, `http://${req.headers.host}`);
         const searchParams = new URLSearchParams(url.search);
         const keyword = searchParams.get('keyword');
-        console.log(keyword)
+        //console.log(keyword)
         let query = {creator: userID};
         if (keyword !== null && keyword.trim() !== "") {
             query = {

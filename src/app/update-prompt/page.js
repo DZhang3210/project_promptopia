@@ -51,7 +51,7 @@ const EditPrompt = () => {
         router.push('/')
       }
     }catch(err){
-      console.log(err)
+      //console.log(err)
     }finally{
       setSubmitting(false); 
     }
