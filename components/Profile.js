@@ -2,6 +2,7 @@ import React from 'react'
 import PromptCard from './PromptCard'
 
 const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword, filterSelection, setFilterSelection}) => {
+  console.log(data)
   return (
     <section className='w-full'>
       <h1 className='head_text text-left'>
@@ -14,11 +15,11 @@ const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword
       <form className='relative w-full flex-center mt-4'>
         <input  
           type = "text"
-          placeholder = "Search for a tag or a username"
+          placeholder = "Search for a tag or a username...."
           value = {keyword}
           onChange = {(e)=>setKeyword(e.target.value)}
           required
-          className='search_input peer'
+          className='search_input peer placeholder:text-orange-300 placeholder:text-lg h-[3rem]'
         />
       </form>
 
@@ -38,7 +39,7 @@ const Profile = ({name, desc, data, handleEdit, handleDelete,keyword, setKeyword
         </div>
       </div>
 
-      <div className='mt-16 prompt_layout'>
+      <div className='mt-16 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
         {data.map((post) =>(
           <PromptCard
             key = {post._id}

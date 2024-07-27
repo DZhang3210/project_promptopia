@@ -3,14 +3,14 @@ import { Suspense } from 'react'
 
 const Form = ({type, post, setPost, submitting, handleSubmit}) => {
   return (
-    <section className='w-full max-w-full flex-start flex-col'>
+    <section className='w-full max-w-full flex-start flex-col border-b-orange-600 border-b-4'>
       <h1 className='head_text text-left'>
         <span className='blue_gradient'>
           {type} Post
         </span>
       </h1>
       <p className='desc text-left max-w-md'>
-        {type} and share amazing prompts with the world, and let your imagination run wild with an AI-powered platform.
+        {type} and share amazing prompts with the world, towards powering the world
       </p>
       <form 
         onSubmit = {handleSubmit}
@@ -42,13 +42,13 @@ const Form = ({type, post, setPost, submitting, handleSubmit}) => {
         />
       </label>
       <div className='flex flex-end mt-2 pr-2 gap-4 w-full'>
-        <Link href ="/" className='text-gray-500 text-sm'>
+        <Link href ="/" className='text-gray-500 text-lg'>
           Cancel
         </Link>
         <button 
           type = "submit"
           disabled = {submitting}
-          className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+          className='px-5 py-1.5 text-lg bg-primary-orange rounded-full text-white'
         >
           {submitting ? `${type}...` : type}
         </button>

@@ -10,7 +10,7 @@ export default function Home() {
         <span className="orange_gradient text-center">AI-Powered Prompts</span>
       </h1>
       <p className="desc">
-        Promptopia is an open-source AI prompting tools for modern world
+        MagicPrompt is an open-source AI prompting tools for modern world
       </p>
       <Feed/>
     </section>

@@ -16,9 +16,11 @@ export default function RootLayout({children}){
           <div className="gradient"/>
         </div>
         <Provider>
-          <main className="app">
+          <main className="app relative">
             <Navbar/>
-            {children}
+            <div className="mt-20">
+              {children}
+            </div>
           </main>
         </Provider>
       </body>

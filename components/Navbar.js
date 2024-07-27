@@ -19,7 +19,7 @@ const Navbar = () => {
   },[])
 
   return (
-    <nav className='flex-between w-full mb-16 pt-3'>
+    <nav className='fixed top-0 flex-between w-full mb-16 py-5 px-5 border-b-4 border-orange-500 bg-gray-50 z-[100]'>
       <Link href = "/" className='flex gap-2 flex-center'>
         <Image 
           src = "/assets/images/logo.svg" 
@@ -28,7 +28,7 @@ const Navbar = () => {
           height = {30}
           className='object-contain'
         />
-        <p className='logo_text'>Promptopia</p>
+        <p className='logo_text'>MagicPrompt</p>
       </Link>
       <div className='sm:flex hidden'>
         
@@ -106,17 +106,12 @@ const Navbar = () => {
           </div>
         ):(
           <>
-          {providers && 
-            Object.values(providers).map((provider)=>(
-              <button
-                type = "button"
-                key = {provider.name}
-                onClick ={() => signIn(provider.id)}
-                className='black_btn'
-              >
-                Sign In({provider.name})
-              </button>
-          ))}
+            <Link
+              href = "/login"
+              className='black_btn'
+            >
+              Login Page
+            </Link>
           </>
         )}
       </div>

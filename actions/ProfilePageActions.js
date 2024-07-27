@@ -5,7 +5,6 @@ import Prompt from '@/models/prompt';
 
 export const GetLikedPosts = async (userID, keyword) => {
   try {
-    console.log("Hello")
     await connectToDb();
     console.log(userID)
     // Step 2: Find all Likes by the user where liked is true

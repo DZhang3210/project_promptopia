@@ -4,13 +4,17 @@ import { useState, useEffect } from 'react'
 import {useSession} from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Profile from '@/components/Profile'
+import {GetLikedPosts} from '@/actions/ProfilePageActions'
 
 const MyProfile = ({params}) => {
   const profileID = params.profileID
   const router = useRouter();
   const {data: session} =  useSession()
   const [posts, setPosts] = useState([])
+  const [keyword, setKeyword] = useState("")
+  const [filterSelection, setFilterSelection] = useState(0)
   
+
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`)
   }
@@ -28,16 +32,30 @@ const MyProfile = ({params}) => {
       }
     }
   }
+  const fetchPosts = async () =>{
+    const response = await fetch(`/api/users/${profileID}/posts?keyword=${keyword}`)
+    const data = await response.json()
+    setPosts(data)
+
+  }
+  const fetchLikedPosts = async() => {
+    console.log(session?.user?.id, keyword)
+    const response = await GetLikedPosts(profileID, keyword)
+    //console.log('response',response)
+    // const data = await response.json()
+    setPosts(response)
+  }
 
   useEffect(()=>{
-    const fetchPosts = async () =>{
-      const response = await fetch(`/api/users/${profileID}/posts`)
-      const data = await response.json()
-      setPosts(data)
-
-    }
-    if(profileID) fetchPosts();
-  }, [session])
+      //console.log(filterSelection, session, keyword)
+      if (filterSelection === 0){
+        console.log('Option 1')
+        fetchPosts();}
+      else {
+        console.log('Option 2')  
+        fetchLikedPosts()
+      }
+  }, [profileID,keyword, filterSelection])
   
   return (
     <Profile
@@ -46,6 +64,10 @@ const MyProfile = ({params}) => {
         data = {posts}
         handleEdit = {handleEdit}
         handleDelete = {handleDelete}
+        keyword=  {keyword}
+        setKeyword = {setKeyword}
+        filterSelection = {filterSelection}
+        setFilterSelection = {setFilterSelection}
     />
   )
 }

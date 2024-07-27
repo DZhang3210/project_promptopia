@@ -13,6 +13,7 @@ const MyProfile = () => {
   const [keyword, setKeyword] = useState("")
   const [filterSelection, setFilterSelection] = useState(0)
 
+
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`)
   }
@@ -53,6 +54,8 @@ const MyProfile = () => {
         console.log('Option 2')  
         fetchLikedPosts()
       }
+    }else if (session === null){
+      router.push('/')
     }
   }, [session, keyword, filterSelection])
   
